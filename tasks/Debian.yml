@@ -1,0 +1,55 @@
+- block:
+  - name: Ensure Java dependencies are installed.
+    apt: "name={{ item }} state=present update_cache=yes"
+    with_items:
+      - software-properties-common
+      - python-software-properties
+
+  - name: Add ppa:webupd8team/java repository.
+    apt_repository:
+      repo: "ppa:webupd8team/java"
+      state: present
+      update_cache: yes
+
+  - name: Accept Java 8 License
+    become: yes
+    debconf: name='oracle-java8-installer' question='shared/accepted-oracle-license-v1-1' value='true' vtype='select'
+
+  - name: Add Jenekins Apt signing key
+    apt_key:
+      url: "{{ jenkins_key_url}}"
+      state: present
+
+  - name: Add Jenkins apt repository.
+    apt_repository:
+      repo: "{{ jenkins_repo_url }}"
+      state: present
+      update_cache: yes
+    when: jenkins_repo_url != ''
+
+  - name: INSTALL TOOLS
+    apt: "name={{item}} state=present update_cache=yes"
+    with_items:
+       - "{{ Tools }}"
+
+  - name: Setup Jenekins Port
+    lineinfile:
+      dest: "/etc/default/jenkins"
+      regexp: "^HTTP_PORT"
+      line: "HTTP_PORT={{ Port }}"
+    when: Port != ''
+
+  - name: Ensure Jenkins is started and runs on startup.
+    service: name=jenkins state=started enabled=yes
+
+  - name: REMOVING SECURITY FOR INITIAL SETUP
+    lineinfile:
+      dest: "/var/lib/jenkins/config.xml"
+      regexp: '^(.*)<useSecurity>true</useSecurity>(.*)$'
+      line: "<useSecurity>false</useSecurity>"
+
+  - name: Starting Jenkins
+    command: service jenkins restart
+
+  become: true
+

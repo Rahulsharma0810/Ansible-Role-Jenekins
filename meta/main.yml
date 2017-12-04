@@ -1,0 +1,11 @@
+galaxy_info:
+  author: Rahul Sharma
+  description: Ansible Role to install Jenekins in Ubuntu
+  company: your company (optional)
+  license: MIT
+  min_ansible_version: 1.2
+  platforms:
+  - name: Ubuntu
+    versions:
+    - all
+  dependencies: []
