@@ -5,7 +5,7 @@ Ansible Role to install Jenekins in Ubuntu
 
 ROAD MAP
 --------
-- Add admin Password
+- ~~Add admin Password~~
 - Add Centos Support
 - Add Plugins Support
 
@@ -43,6 +43,12 @@ Example Playbook
       roles:
     	- Ansible-Role-Jenekins
 
+
+Credentials
+-----------
+- Default Auto Genrated Password is in ```/var/lib/jenkins/secrets/initialAdminPassword```
+- Console will print this out, you may copy paste
+- Head to youhost:5656, Install Plugins and set it up.
 
 License
 -------

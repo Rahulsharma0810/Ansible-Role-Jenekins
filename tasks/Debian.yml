@@ -1,33 +1,33 @@
 - block:
-  # - name: Add Jenekins Apt signing key
-  #   apt_key:
-  #     url: "{{ jenkins_deb_key_url}}"
-  #     state: present
+  - name: Add Jenekins Apt signing key
+    apt_key:
+      url: "{{ jenkins_deb_key_url}}"
+      state: present
 
-  # - name: Add Jenkins apt repository.
-  #   apt_repository:
-  #     repo: "{{ jenkins_deb_repo_url }}"
-  #     state: present
-  #     update_cache: yes
-  #   when: jenkins_deb_repo_url != ''
+  - name: Add Jenkins apt repository.
+    apt_repository:
+      repo: "{{ jenkins_deb_repo_url }}"
+      state: present
+      update_cache: yes
+    when: jenkins_deb_repo_url != ''
 
-  # - name: INSTALL TOOLS
-  #   apt: "name={{item}} state=present update_cache=yes"
-  #   with_items:
-  #      - "{{ Tools }}"
+  - name: INSTALL TOOLS
+    apt: "name={{item}} state=present update_cache=yes"
+    with_items:
+       - "{{ Tools }}"
 
-  # - name: Setup Jenekins Port
-  #   lineinfile:
-  #     dest: "/etc/default/jenkins"
-  #     regexp: "^HTTP_PORT"
-  #     line: "HTTP_PORT={{ Port }}"
-  #   when: Port != ''
+  - name: Setup Jenekins Port
+    lineinfile:
+      dest: "/etc/default/jenkins"
+      regexp: "^HTTP_PORT"
+      line: "HTTP_PORT={{ Port }}"
+    when: Port != ''
 
-  # - name: Ensure Jenkins is started and runs on startup.
-  #   service: name=jenkins state=started enabled=yes
+  - name: Ensure Jenkins is started and runs on startup.
+    service: name=jenkins state=started enabled=yes
 
-  # - name: Starting Jenkins
-  #   command: service jenkins restart
+  - name: Starting Jenkins
+    command: service jenkins restart
 
   - shell: cat /var/lib/jenkins/secrets/initialAdminPassword
     register: result
