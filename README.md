@@ -13,15 +13,15 @@ ROAD MAP
 Requirements
 ------------
 
-- Java 8
+- Java 8 - [Ansible-Role-JRE](https://github.com/Rahulsharma0810/Ansible-Role-JRE)
 
 Role Variables
 --------------
 
 ```
 # Jenekins Keys and Repo
-jenkins_key_url: http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key
-jenkins_repo_url: deb http://pkg.jenkins-ci.org/debian binary/
+jenkins_deb_key_url: https://pkg.jenkins.io/debian-stable/jenkins.io.key
+jenkins_deb_repo_url: deb https://pkg.jenkins.io/debian-stable binary/
 ```
 
 ```
@@ -34,10 +34,6 @@ Port: 5656
 Tools:
   - jenkins
   - git
-  - java-common
-  - oracle-java8-installer
-  - ca-certificates
-  - oracle-java8-set-default
 ```
 
 Example Playbook
